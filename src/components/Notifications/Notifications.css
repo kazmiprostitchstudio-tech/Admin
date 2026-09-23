@@ -1,0 +1,128 @@
+.notifications-module {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.notif-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.btn-mark-read {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.825rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.btn-clear-all {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #dc2626;
+  padding: 0.55rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.825rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+}
+
+.notifications-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.notif-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+  transition: all 0.2s;
+}
+
+.notif-card.unread {
+  border-left: 4px solid #3b82f6;
+  background: #f8fafc;
+}
+
+.notif-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.notif-icon.warning { background: #fef3c7; color: #b45309; }
+.notif-icon.order { background: #eff6ff; color: #2563eb; }
+.notif-icon.success { background: #dcfce7; color: #15803d; }
+.notif-icon.info { background: #f1f5f9; color: #475569; }
+
+.notif-content {
+  flex: 1;
+}
+
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.notif-header h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.notif-time {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.notif-content p {
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+.btn-del-notif {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: #94a3b8;
+  cursor: pointer;
+}
+
+.btn-del-notif:hover {
+  color: #ef4444;
+}
+
+.empty-notif-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.done-ico {
+  font-size: 3rem;
+  color: #10b981;
+  margin-bottom: 0.75rem;
+}

@@ -7,9 +7,15 @@ import Overview from "./components/Overview/Overview";
 import Products from "./components/Products/Products";
 import Orders from "./components/Orders/Orders";
 import Customers from "./components/Customers/Customers";
-import Categories from "./components/Categories/Categories"; // Imported
-import Coupons from "./components/Coupons/Coupons";       // Imported
-import PlaceholderPage from "./components/pages/PlaceholderPage";
+import Categories from "./components/Categories/Categories";
+import Coupons from "./components/Coupons/Coupons";
+import Reviews from "./components/Reviews/Reviews";
+import Payments from "./components/Payments/Payments";
+import Shipping from "./components/Shipping/Shipping";
+import Analytics from "./components/Analytics/Analytics";
+import Notifications from "./components/Notifications/Notifications";
+import Admins from "./components/Admins/Admins";
+import Settings from "./components/Settings/Settings";
 import "./App.css";
 
 export default function App() {
@@ -27,18 +33,18 @@ export default function App() {
             <main className="admin-content-area">
               <Routes>
                 <Route path="/" element={<Overview />} />
-                <Route path="/products" element={<Products />} />
                 <Route path="/orders" element={<Orders />} />
-                <Route path="/customers" element={<Customers />} />
+                <Route path="/products" element={<Products />} />
                 <Route path="/categories" element={<Categories />} />
+                <Route path="/customers" element={<Customers />} />
+                <Route path="/payments" element={<Payments />} />
+                <Route path="/shipping" element={<Shipping />} />
                 <Route path="/coupons" element={<Coupons />} />
-                <Route path="/payments" element={<PlaceholderPage title="Payments & Gateways" description="Track Stripe, PayPal, COD payouts, and payment statuses." />} />
-                <Route path="/shipping" element={<PlaceholderPage title="Shipping & Logistics" description="Manage couriers, delivery zones, rates, and tracking numbers." />} />
-                <Route path="/analytics" element={<PlaceholderPage title="Reports & Deep Analytics" description="Detailed sales conversion, cart abandonment, and customer LTV." />} />
-                <Route path="/reviews" element={<PlaceholderPage title="Reviews & Ratings" description="Moderate customer feedback, approve ratings, and manage replies." />} />
-                <Route path="/notifications" element={<PlaceholderPage title="System Notifications" description="Low stock warnings, server status, and order alerts." />} />
-                <Route path="/admins" element={<PlaceholderPage title="Admin Users & Roles" description="Control staff access, role-based permissions, and audit logs." />} />
-                <Route path="/settings" element={<PlaceholderPage title="Store Settings" description="General store configuration, currencies, tax rules, and email templates." />} />
+                <Route path="/analytics" element={<Analytics />} />
+                <Route path="/reviews" element={<Reviews />} />
+                <Route path="/notifications" element={<Notifications />} />
+                <Route path="/admins" element={<Admins />} />
+                <Route path="/settings" element={<Settings />} />
               </Routes>
             </main>
           </div>

@@ -1,0 +1,166 @@
+.shipping-module {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.btn-create-shipment {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.shipping-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.shp-kpi-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.shp-ico {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+}
+
+.shp-ico.blue { background: #eff6ff; color: #2563eb; }
+.shp-ico.yellow { background: #fef3c7; color: #d97706; }
+.shp-ico.green { background: #ecfdf5; color: #059669; }
+
+.shipping-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.shp-search-box {
+  position: relative;
+  width: 380px;
+}
+
+.shp-search-box .search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.shp-search-box input {
+  width: 100%;
+  padding: 0.65rem 1rem 0.65rem 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.shp-filter-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.shp-table-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.shp-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.shp-table th {
+  background-color: #f8fafc;
+  padding: 0.85rem 1.25rem;
+  font-size: 0.775rem;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.shp-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.destination-text {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #334155;
+}
+
+.pin-ico { color: #ef4444; }
+
+.courier-badge {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.tracking-code {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: monospace;
+  color: #2563eb;
+}
+
+.shp-status-badge {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.725rem;
+  font-weight: 600;
+}
+
+.shp-status-badge.preparing { background: #f1f5f9; color: #64748b; }
+.shp-status-badge.in-transit { background: #dbeafe; color: #1d4ed8; }
+.shp-status-badge.out-for-delivery { background: #fef3c7; color: #b45309; }
+.shp-status-badge.delivered { background: #dcfce7; color: #15803d; }
+
+.shp-status-select {
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: #ffffff;
+  outline: none;
+  cursor: pointer;
+}
