@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { 
   FiSearch, 
   FiPlus, 
-  FiTrash2, 
   FiX, 
   FiStar,
   FiTrendingUp
 } from "react-icons/fi";
 import "./Products.css";
+
+const API_BASE_URL = "https://backend-e-commerce-admin-hk.vercel.app/api/products";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -24,11 +25,11 @@ export default function Products() {
   const [stock, setStock] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  // 1. Fetch Products from MongoDB Backend
+  // 1. Fetch Products from Production MongoDB Atlas Backend
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/products");
+      const res = await fetch(API_BASE_URL);
       const data = await res.json();
       setProducts(data);
     } catch (error) {
@@ -42,7 +43,7 @@ export default function Products() {
     fetchProducts();
   }, []);
 
-  // 2. Add New Product to MongoDB Backend
+  // 2. Add New Product to Production MongoDB Atlas Backend
   const handleCreateProduct = async (e) => {
     e.preventDefault();
     if (!title.trim() || !price || !stock) return;
@@ -57,7 +58,7 @@ export default function Products() {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/products", {
+      const res = await fetch(API_BASE_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newProductData),
