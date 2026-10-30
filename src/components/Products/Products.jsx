@@ -1,49 +1,81 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   FiSearch, 
   FiPlus, 
   FiTrash2, 
   FiX, 
-  FiBox, 
-  FiAlertTriangle, 
-  FiCheckCircle, 
   FiStar,
   FiTrendingUp
 } from "react-icons/fi";
-import { useAdmin } from "../../context/AdminContext";
 import "./Products.css";
 
 export default function Products() {
-  const { products, addProduct, deleteProduct, updateProductStock } = useAdmin();
-
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Add Product Form Inputs
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [category, setCategory] = useState("T-shirts");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
-  const handleCreateProduct = (e) => {
+  // 1. Fetch Products from MongoDB Backend
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("http://localhost:5000/api/products");
+      const data = await res.json();
+      setProducts(data);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  // 2. Add New Product to MongoDB Backend
+  const handleCreateProduct = async (e) => {
     e.preventDefault();
     if (!title.trim() || !price || !stock) return;
 
-    addProduct({
+    const newProductData = {
       title: title.trim(),
+      description: description.trim() || "Quality clothing item",
       category,
       price: Number(price),
       stock: Number(stock),
       image: imageUrl.trim() || "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&q=80",
-    });
+    };
 
-    setTitle("");
-    setPrice("");
-    setStock("");
-    setImageUrl("");
-    setIsAddModalOpen(false);
+    try {
+      const res = await fetch("http://localhost:5000/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProductData),
+      });
+
+      if (res.ok) {
+        // Refresh catalog after adding product
+        fetchProducts();
+        setTitle("");
+        setDescription("");
+        setPrice("");
+        setStock("");
+        setImageUrl("");
+        setIsAddModalOpen(false);
+      }
+    } catch (error) {
+      console.error("Error creating product:", error);
+    }
   };
 
   const filteredProducts = products.filter((p) => {
@@ -57,7 +89,7 @@ export default function Products() {
       <div className="module-top-header">
         <div>
           <h2>Products Catalog</h2>
-          <p>Real-time inventory control, price adjustments, and stock levels synced with LocalStorage.</p>
+          <p>Real-time inventory control synced with MongoDB Atlas.</p>
         </div>
         <button 
           type="button" 
@@ -107,77 +139,56 @@ export default function Products() {
                 <th>Rating</th>
                 <th>Total Sold</th>
                 <th>Status</th>
-                <th style={{ textAlign: "right" }}>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {filteredProducts.length > 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan="7" className="empty-table-cell">
+                    Loading products from MongoDB...
+                  </td>
+                </tr>
+              ) : filteredProducts.length > 0 ? (
                 filteredProducts.map((prod) => (
-                  <tr key={prod.id}>
+                  <tr key={prod._id}>
                     <td>
                       <div className="product-title-cell">
-                        <img src={prod.image} alt={prod.title} className="prod-thumbnail" />
+                        <img 
+                          src={prod.image || "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=300&q=80"} 
+                          alt={prod.title} 
+                          className="prod-thumbnail" 
+                        />
                         <div>
                           <span className="prod-name">{prod.title}</span>
-                          <span className="prod-id">{prod.id}</span>
+                          <span className="prod-id">{prod._id}</span>
                         </div>
                       </div>
                     </td>
                     <td><span className="category-tag">{prod.category}</span></td>
                     <td style={{ fontWeight: 700, color: "#0f172a" }}>${prod.price}</td>
                     <td>
-                      <div className="stock-counter-wrap">
-                        <button 
-                          type="button" 
-                          onClick={() => updateProductStock(prod.id, prod.stock - 1)}
-                          title="Decrease Stock"
-                        >
-                          -
-                        </button>
-                        <span className="stock-value">{prod.stock}</span>
-                        <button 
-                          type="button" 
-                          onClick={() => updateProductStock(prod.id, prod.stock + 1)}
-                          title="Increase Stock"
-                        >
-                          +
-                        </button>
-                      </div>
+                      <span className="stock-value">{prod.stock}</span>
                     </td>
                     <td>
                       <span className="rating-pill">
-                        <FiStar className="star-icon" /> {prod.rating}
+                        <FiStar className="star-icon" /> 4.5
                       </span>
                     </td>
                     <td>
                       <span className="sales-text">
-                        <FiTrendingUp className="trend-icon" /> {prod.sales} pcs
+                        <FiTrendingUp className="trend-icon" /> 0 pcs
                       </span>
                     </td>
                     <td>
-                      <span className={`stock-status-pill ${prod.status.toLowerCase().replace(/\s+/g, "-")}`}>
-                        {prod.status}
+                      <span className={`stock-status-pill ${prod.stock > 0 ? "in-stock" : "out-of-stock"}`}>
+                        {prod.stock > 0 ? "In Stock" : "Out of Stock"}
                       </span>
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <button
-                        type="button"
-                        className="btn-delete-prod"
-                        title="Delete Product"
-                        onClick={() => {
-                          if (window.confirm(`Delete ${prod.title}?`)) {
-                            deleteProduct(prod.id);
-                          }
-                        }}
-                      >
-                        <FiTrash2 />
-                      </button>
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8" className="empty-table-cell">
+                  <td colSpan="7" className="empty-table-cell">
                     No products found matching your filter criteria.
                   </td>
                 </tr>
@@ -207,6 +218,16 @@ export default function Products() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   required
+                />
+              </label>
+
+              <label>
+                Description
+                <input
+                  type="text"
+                  placeholder="Short description..."
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </label>
 
@@ -264,7 +285,7 @@ export default function Products() {
                   Cancel
                 </button>
                 <button type="submit" className="btn-submit-save">
-                  Save Product to Catalog
+                  Save Product to Database
                 </button>
               </div>
             </form>
